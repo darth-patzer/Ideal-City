@@ -5,7 +5,7 @@ import geo.Location;
 public abstract class AbstractCity {
 
 	protected String name;
-	protected Location location;
+	protected Location cityCentre;
 	protected int numInhabitants;
 	protected int size;
 	
@@ -13,8 +13,8 @@ public abstract class AbstractCity {
 		return name;
 	}
 	
-	public Location getLocation() {
-		return location;
+	public Location getCityCentre() {
+		return cityCentre;
 	}
 	
 	public int getNumInhabitants() {
