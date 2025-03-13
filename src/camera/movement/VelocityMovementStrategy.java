@@ -8,6 +8,8 @@ public class VelocityMovementStrategy extends CameraMovementStrategy {
 	private float velocityX = 0;
 	private float velocityZ = 0;
 	
+	private static final float FRICTION_COEFFICIENT = 0.84f;
+	
 	@Override
 	public Point move(Point cameraPosition, float speed) {
 		if(Keyboard.isKeyPressed('w')) {
@@ -27,8 +29,8 @@ public class VelocityMovementStrategy extends CameraMovementStrategy {
 	
 	private Point applyVelocities(Point cameraPosition) {
 		Point newPosition = new Point(cameraPosition.getX() + velocityX, cameraPosition.getZ() + velocityZ);
-		velocityX *= 0.8;
-		velocityZ *= 0.8;
+		velocityX *= FRICTION_COEFFICIENT;
+		velocityZ *= FRICTION_COEFFICIENT;
 		return newPosition;
 	}
 

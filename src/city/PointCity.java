@@ -1,8 +1,8 @@
 package city;
 
-import java.awt.Graphics;
-
+import geo.GeoService;
 import geo.Location;
+import graphics.Renderer;
 
 public class PointCity extends AbstractCity {
 	
@@ -14,7 +14,8 @@ public class PointCity extends AbstractCity {
 	}
 
 	@Override
-	public void render(Graphics g) {
+	public void render() {
+		Renderer.drawPoint(GeoService.to2DCoords(cityCentre));
 		
 	}
 	

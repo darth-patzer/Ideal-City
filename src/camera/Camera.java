@@ -6,36 +6,31 @@ import geo.Point;
 
 public class Camera {
 	
-	private Point position;
+	private static Point position = new Point(0, 0);
 	
-	private CameraMovementStrategy moveStrategy;
+	private static CameraMovementStrategy moveStrategy = new LinearMovementStrategy();
 	
 	private static final float SPEED = 5.5f;
-	
-	public Camera() {
-		this.moveStrategy = new LinearMovementStrategy();
-		this.position = new Point(0, 0);
-	}
 
-	public Camera(CameraMovementStrategy moveStrategy, Point position) {
-		this.moveStrategy = moveStrategy;
-		this.position = position;
+	public static void initializeCamera(CameraMovementStrategy movementStrategy, Point cameraPosition) {
+		moveStrategy = movementStrategy;
+		position = cameraPosition;
 	}
 	
-	public void teleportTo(Point position) {
-		this.position = position;
+	public static void teleportTo(Point newPosition) {
+		position = newPosition;
 	}
 	
-	public Point getPosition() {
+	public static Point getPosition() {
 		return position;
 	}
 	
-	public void setMovementStrategy(CameraMovementStrategy moveStrategy) {
-		this.moveStrategy = moveStrategy;
+	public static void setMovementStrategy(CameraMovementStrategy newMovementStrategy) {
+		moveStrategy = newMovementStrategy;
 	}
 
-	public void move() {
-		this.position = moveStrategy.move(position, SPEED);
+	public static void move() {
+		position = moveStrategy.move(position, SPEED);
 	}
 	
 }

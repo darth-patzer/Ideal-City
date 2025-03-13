@@ -1,7 +1,5 @@
 package city;
 
-import java.awt.Graphics;
-
 import geo.Location;
 
 public abstract class AbstractCity {
@@ -27,6 +25,6 @@ public abstract class AbstractCity {
 		return size;
 	}
 	
-	public abstract void render(Graphics g);
+	public abstract void render();
 	
 }

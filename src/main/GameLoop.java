@@ -1,7 +1,5 @@
-package graphics;
+package main;
 
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -9,17 +7,23 @@ import java.awt.image.BufferStrategy;
 
 import camera.Camera;
 import camera.movement.VelocityMovementStrategy;
+import city.AbstractCity;
+import city.PointCity;
+import geo.Location;
 import geo.Point;
+import graphics.Renderer;
+import graphics.WindowManager;
 
 public class GameLoop {
 	
-	private boolean running;
+	private boolean running = false;
 	
-	private Camera camera;
+	private AbstractCity city;
 	
 	public GameLoop() {
 		initializeWindow();
-		initializeCamera();
+		Camera.initializeCamera(new VelocityMovementStrategy(), new Point(500, 400));
+		city = new PointCity("Barnesville", new Location(500, 0));
 		doGameLoop();
 	}
 	
@@ -30,10 +34,6 @@ public class GameLoop {
 				running = false;
 			}
 		});
-	}
-	
-	private void initializeCamera() {
-		camera = new Camera(new VelocityMovementStrategy(), new Point(500f, 400f));
 	}
 
 	private void doGameLoop() {
@@ -69,25 +69,22 @@ public class GameLoop {
 	}
 	
 	private void tick() {
-		camera.move();
+		Camera.move();
 	}
 	
 	private void render() {
 		BufferStrategy bs = WindowManager.getBufferStrategy();
 		Graphics g = bs.getDrawGraphics();
+		Renderer.setGraphics(g);
 		
 		//rendering logic
-		
-		g.setColor(Color.WHITE);
-		Dimension screenSize = WindowManager.getScreenSize();
-		g.fillRect(0, 0, screenSize.width, screenSize.height);
+		Renderer.drawBackground();
 
-		g.setColor(Color.RED);
+		Renderer.drawPoint(new Point(0, 0));
 		
-		Point cameraPoint = camera.getPosition();
+		city.render();
 		
-		g.fillRect(cameraPoint.getXAsInt() + 10, cameraPoint.getZAsInt() + 10, 20, 20);
-		
+		Renderer.clearGraphics();
 		g.dispose();
 		bs.show();
 	}
