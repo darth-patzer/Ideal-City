@@ -1,6 +1,8 @@
 package graphics;
 
 import java.awt.Canvas;
+import java.awt.event.WindowListener;
+import java.awt.image.BufferStrategy;
 
 import javax.swing.JFrame;
 
@@ -12,16 +14,28 @@ public class WindowManager {
 	public static void InitializeWindow() {
 		canvas = new Canvas();
 		frame = new JFrame("application");
-		handleFrameDefaults(frame);
+		handleFrameDefaults();
 		frame.add(canvas);
+		canvas.createBufferStrategy(2);
 	}
 	
-	private static void handleFrameDefaults(JFrame frame) {
+	private static void handleFrameDefaults() {
 		frame.setVisible(true);
 		frame.setSize(960, 640);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	}
+	
+	public static void addWindowListener(WindowListener listener) {
+		frame.addWindowListener(listener);
+	}
+	
+	public static void dispose() {
+		frame.dispose();
+	}
+	
+	public static BufferStrategy getBufferStrategy() {
+		return canvas.getBufferStrategy();
 	}
 
 }
