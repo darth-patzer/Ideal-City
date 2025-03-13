@@ -22,7 +22,7 @@ public class GameLoop {
 	
 	public GameLoop() {
 		initializeWindow();
-		Camera.initializeCamera(new VelocityMovementStrategy(), new Point(500, 400));
+		Camera.initializeCamera(new VelocityMovementStrategy(), new Point(0, 0));
 		city = new PointCity("Barnesville", new Location(500, 0));
 		doGameLoop();
 	}

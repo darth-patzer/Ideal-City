@@ -4,7 +4,9 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import camera.CameraService;
+import camera.CameraSpacePoint;
 import geo.Point;
+import utils.TextUtils;
 
 public class Renderer {
 	
@@ -22,10 +24,19 @@ public class Renderer {
 	public static void drawPoint(Point p) {
 		verifyGraphics();
 		
-		Point cSpace = CameraService.shiftPointToCameraCoords(p);
+		CameraSpacePoint cSpace = CameraService.shiftPointToCameraCoords(p);
 		g.setColor(Color.BLACK);
 		
-		g.fillOval(cSpace.getXAsInt() - POINT_RADIUS, cSpace.getZAsInt() - POINT_RADIUS, POINT_RADIUS*2, POINT_RADIUS*2);
+		g.fillOval(cSpace.getX() - POINT_RADIUS, cSpace.getZ() - POINT_RADIUS, POINT_RADIUS*2, POINT_RADIUS*2);
+	}
+	
+	public static void drawCentredTextAsSingleLine(String text, Point textLocation) {
+		verifyGraphics();
+		int stringWidth = TextUtils.getStringLength(text);
+		
+		CameraSpacePoint cSpace = CameraService.shiftPointToCameraCoords(textLocation);
+		
+		g.drawString(text, cSpace.getX() - stringWidth / 2, cSpace.getZ());
 	}
 	
 	public static void drawBackground() {

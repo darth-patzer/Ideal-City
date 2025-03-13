@@ -2,6 +2,7 @@ package city;
 
 import geo.GeoService;
 import geo.Location;
+import geo.Point;
 import graphics.Renderer;
 
 public class PointCity extends AbstractCity {
@@ -15,8 +16,10 @@ public class PointCity extends AbstractCity {
 
 	@Override
 	public void render() {
-		Renderer.drawPoint(GeoService.to2DCoords(cityCentre));
+		Point cityLocation = GeoService.to2DCoords(cityCentre);
 		
+		Renderer.drawPoint(cityLocation);
+		Renderer.drawCentredTextAsSingleLine(name, new Point(cityLocation.getX(), cityLocation.getZ() - 20));
 	}
 	
 }

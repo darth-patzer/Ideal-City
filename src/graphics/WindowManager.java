@@ -2,6 +2,7 @@ package graphics;
 
 import java.awt.Canvas;
 import java.awt.Dimension;
+import java.awt.FontMetrics;
 import java.awt.event.WindowListener;
 import java.awt.image.BufferStrategy;
 
@@ -55,6 +56,10 @@ public class WindowManager {
 	
 	public static Dimension getScreenSize() {
 		return canvas.getSize();
+	}
+	
+	public static FontMetrics getFontMetrics() {
+		return frame.getFontMetrics(frame.getFont());
 	}
 
 }
