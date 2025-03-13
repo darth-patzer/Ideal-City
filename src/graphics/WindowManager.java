@@ -14,6 +14,7 @@ public class WindowManager {
 	public static void InitializeWindow() {
 		canvas = new Canvas();
 		frame = new JFrame("application");
+		
 		handleFrameDefaults();
 		frame.add(canvas);
 		canvas.createBufferStrategy(2);
