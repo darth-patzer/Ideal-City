@@ -1,6 +1,7 @@
 package graphics;
 
 import java.awt.Canvas;
+import java.awt.Dimension;
 import java.awt.event.WindowListener;
 import java.awt.image.BufferStrategy;
 
@@ -50,6 +51,10 @@ public class WindowManager {
 	
 	public static BufferStrategy getBufferStrategy() {
 		return canvas.getBufferStrategy();
+	}
+	
+	public static Dimension getScreenSize() {
+		return canvas.getSize();
 	}
 
 }

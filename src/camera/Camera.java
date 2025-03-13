@@ -1,37 +1,61 @@
 package camera;
 
+import camera.movementStrategy.CameraMovementStrategy;
+import camera.movementStrategy.LinearMovementStrategy;
 import geo.Point;
 
 public class Camera {
 	
-	private int x;
-	private int z;
+	private Point position;
 	
-	public Camera() { }
+	private CameraMovementStrategy moveStrategy;
+	
+	private static final float SPEED = 5.5f;
+	
+	public Camera() {
+		this.moveStrategy = new LinearMovementStrategy();
+	}
+	
+	public Camera(CameraMovementStrategy moveStrategy) {
+		this.moveStrategy = moveStrategy;
+	}
 
-	public Camera(int x, int z) {
-		this.x = x;
-		this.z = z;
+	public Camera(CameraMovementStrategy moveStrategy, int x, int z) {
+		this.moveStrategy = moveStrategy;
+		this.position = new Point(x, z);
+	}
+
+	public Camera(CameraMovementStrategy moveStrategy, Point position) {
+		this.moveStrategy = moveStrategy;
+		this.position = position;
 	}
 	
-	public void moveWest(int moveDist) {
-		this.x += moveDist;
+	public void moveWest() {
+		position = moveStrategy.moveWest(position, SPEED);
 	}
 	
-	public void moveEast(int moveDist) {
-		this.x -= moveDist;
+	public void moveEast() {
+		position = moveStrategy.moveEast(position, SPEED);
 	}
 	
-	public void moveNorth(int moveDist) {
-		this.z += moveDist;
+	public void moveNorth() {
+		position = moveStrategy.moveNorth(position, SPEED);
 	}
 	
-	public void moveSouth(int moveDist) {
-		this.z -= moveDist;
+	public void moveSouth() {
+		position = moveStrategy.moveSouth(position, SPEED);
 	}
 	
 	public Point getPosition() {
-		return new Point(x, z);
+		return position;
+	}
+	
+	public void teleportTo(Point position) {
+		this.position = position;
+	}
+	
+	public void setMovementStrategy(CameraMovementStrategy moveStrategy) {
+		this.moveStrategy = moveStrategy;
 	}
 	
 }

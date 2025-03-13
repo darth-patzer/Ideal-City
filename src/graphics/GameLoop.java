@@ -1,12 +1,14 @@
 package graphics;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
 
 import camera.CameraService;
-import camera.WASDCameraController;
+import camera.controller.WASDCameraController;
 import geo.Point;
 
 public class GameLoop {
@@ -31,6 +33,7 @@ public class GameLoop {
 	
 	private void setCameraController() {
 		CameraService.setCameraController(new WASDCameraController());
+		CameraService.setCameraPosition(new Point(500, 400));
 	}
 
 	private void doGameLoop() {
@@ -74,11 +77,16 @@ public class GameLoop {
 		Graphics g = bs.getDrawGraphics();
 		
 		//rendering logic
-		g.fillRect(0, 0, 100, 100);
+		
+		g.setColor(Color.WHITE);
+		Dimension screenSize = WindowManager.getScreenSize();
+		g.fillRect(0, 0, screenSize.width, screenSize.height);
+
+		g.setColor(Color.RED);
 		
 		Point cameraPoint = CameraService.getCameraPosition();
 		
-		g.drawLine(500, 300, cameraPoint.getX(), cameraPoint.getZ());
+		g.fillRect(cameraPoint.getX() + 10, cameraPoint.getZ() + 10, 20, 20);
 		
 		g.dispose();
 		bs.show();

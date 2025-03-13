@@ -1,4 +1,6 @@
-package camera;
+package camera.controller;
+
+import camera.Camera;
 
 public abstract class CameraController {
 	
