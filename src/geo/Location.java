@@ -2,31 +2,31 @@ package geo;
 
 public class Location {
 
-	private int x;
-	private int y;
-	private int z;
+	private float x;
+	private float y;
+	private float z;
 	
-	public Location(int x, int z) {
+	public Location(float x, float z) {
 		this.x = x;
 		this.z = z;
 		this.y = 0;
 	}
 	
-	public Location(int x, int z, int y) {
+	public Location(float x, float z, float y) {
 		this.x = x;
 		this.z = z;
 		this.y = y;
 	}
 
-	public int getX() {
+	public float getX() {
 		return x;
 	}
 	
-	public int getY() {
+	public float getY() {
 		return y;
 	}
 	
-	public int getZ() {
+	public float getZ() {
 		return z;
 	}
 	

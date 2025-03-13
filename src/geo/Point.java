@@ -2,21 +2,28 @@ package geo;
 
 public class Point {
 	
-	private int x;
-	private int z;
+	private float x;
+	private float z;
 	
-	public Point(int x, int z) {
-		super();
+	public Point(float x, float z) {
 		this.x = x;
 		this.z = z;
 	}
 
-	public int getX() {
+	public float getX() {
 		return x;
 	}
 
-	public int getZ() {
+	public float getZ() {
 		return z;
+	}
+	
+	public int getXAsInt() {
+		return (int) x;
+	}
+	
+	public int getZAsInt() {
+		return (int) z;
 	}
 
 }

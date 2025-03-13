@@ -7,18 +7,19 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
 
-import camera.CameraService;
-import camera.controller.WASDCameraController;
+import camera.Camera;
+import camera.movement.VelocityMovementStrategy;
 import geo.Point;
 
 public class GameLoop {
 	
 	private boolean running;
 	
+	private Camera camera;
+	
 	public GameLoop() {
 		initializeWindow();
-		setCameraController();
-		
+		initializeCamera();
 		doGameLoop();
 	}
 	
@@ -31,9 +32,8 @@ public class GameLoop {
 		});
 	}
 	
-	private void setCameraController() {
-		CameraService.setCameraController(new WASDCameraController());
-		CameraService.setCameraPosition(new Point(500, 400));
+	private void initializeCamera() {
+		camera = new Camera(new VelocityMovementStrategy(), new Point(500f, 400f));
 	}
 
 	private void doGameLoop() {
@@ -69,7 +69,7 @@ public class GameLoop {
 	}
 	
 	private void tick() {
-		CameraService.move();
+		camera.move();
 	}
 	
 	private void render() {
@@ -84,9 +84,9 @@ public class GameLoop {
 
 		g.setColor(Color.RED);
 		
-		Point cameraPoint = CameraService.getCameraPosition();
+		Point cameraPoint = camera.getPosition();
 		
-		g.fillRect(cameraPoint.getX() + 10, cameraPoint.getZ() + 10, 20, 20);
+		g.fillRect(cameraPoint.getXAsInt() + 10, cameraPoint.getZAsInt() + 10, 20, 20);
 		
 		g.dispose();
 		bs.show();
