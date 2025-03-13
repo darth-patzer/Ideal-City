@@ -6,6 +6,8 @@ import java.awt.image.BufferStrategy;
 
 import javax.swing.JFrame;
 
+import inputs.Keyboard;
+
 public class WindowManager {
 
 	private static Canvas canvas;
@@ -16,8 +18,13 @@ public class WindowManager {
 		frame = new JFrame("application");
 		
 		handleFrameDefaults();
+		
 		frame.add(canvas);
+		
+		addListeners();
+		
 		canvas.createBufferStrategy(2);
+		
 	}
 	
 	private static void handleFrameDefaults() {
@@ -25,6 +32,12 @@ public class WindowManager {
 		frame.setSize(960, 640);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	}
+	
+	private static void addListeners() {
+		canvas.requestFocus();
+		
+		canvas.addKeyListener(Keyboard.getKeyboardTracker());
 	}
 	
 	public static void addWindowListener(WindowListener listener) {

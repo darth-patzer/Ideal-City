@@ -5,12 +5,18 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
 
+import camera.CameraService;
+import camera.WASDCameraController;
+import geo.Point;
+
 public class GameLoop {
 	
-	private boolean running = true;
+	private boolean running;
 	
 	public GameLoop() {
 		initializeWindow();
+		setCameraController();
+		
 		doGameLoop();
 	}
 	
@@ -22,20 +28,45 @@ public class GameLoop {
 			}
 		});
 	}
+	
+	private void setCameraController() {
+		CameraService.setCameraController(new WASDCameraController());
+	}
 
 	private void doGameLoop() {
-		long t = System.currentTimeMillis();
+		
+		running = true;
+		
+		long lastTime = System.nanoTime();
+		double nanoSecondsPerTick = 1000000000 / 20;
+		double delta = 0;
+		long timer = System.currentTimeMillis();
 		int FPS = 0;
+		
 		while(running) {
-			render();
+			long now = System.nanoTime();
+			delta += (now - lastTime) / nanoSecondsPerTick;
+			lastTime = now;
+			while(delta >= 1) {
+				tick();
+				delta--;
+			}
+			if(running) {
+				render();
+			}
 			FPS++;
-			if(System.currentTimeMillis() > t + 1000) {
+			if(System.currentTimeMillis() - timer > 1000) {
+				timer += 1000;
 				System.out.println("FPS: " + FPS);
 				FPS = 0;
-				t += 1000;
 			}
 		}
+		
 		stop();
+	}
+	
+	private void tick() {
+		CameraService.move();
 	}
 	
 	private void render() {
@@ -44,6 +75,10 @@ public class GameLoop {
 		
 		//rendering logic
 		g.fillRect(0, 0, 100, 100);
+		
+		Point cameraPoint = CameraService.getCameraPosition();
+		
+		g.drawLine(500, 300, cameraPoint.getX(), cameraPoint.getZ());
 		
 		g.dispose();
 		bs.show();
